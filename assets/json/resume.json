@@ -28,8 +28,8 @@
       "institution": "Tsinghua University",
       "area": "Computer Science",
       "studyType": "B.Eng",
-      "startDate": "2017.08",
-      "endDate": "2021.06",
+      "startDate": "2017",
+      "endDate": "2021",
       "score": "",
       "courses": []
     },
@@ -37,7 +37,7 @@
       "institution": "Stanford University",
       "area": "Computer Science",
       "studyType": "PnD",
-      "startDate": "2023.09",
+      "startDate": "2023",
       "endDate": "Current",
       "score": "",
       "courses": []
