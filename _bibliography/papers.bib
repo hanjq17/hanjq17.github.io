@@ -5,18 +5,17 @@
 
 @inproceedings{li2021multivariate,
 abbr={KDD},
-author = {Li, Zhihan and Zhao, Youjian and Han, Jiaqi and Su, Ya and Jiao, Rui and Wen, Xidao and Pei, Dan},
-title = {Multivariate Time Series Anomaly Detection and Interpretation Using Hierarchical Inter-Metric and Temporal Embedding},
-year = {2021},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3447548.3467075},
-doi = {10.1145/3447548.3467075},
-booktitle = {Proceedings of the 27th ACM SIGKDD Conference on Knowledge Discovery \& Data Mining},
-pages = {3220–3230},
-numpages = {11},
-series = {KDD '21},
-abstract = {Anomaly detection is a crucial task for monitoring various status (i.e., metrics) of entities (e.g., manufacturing systems and Internet services), which are often characterized by multivariate time series (MTS). In practice, it's important to precisely detect the anomalies, as well as to interpret the detected anomalies through localizing a group of most anomalous metrics, to further assist the failure troubleshooting. In this paper, we propose InterFusion, an unsupervised method that simultaneously models the inter-metric and temporal dependency for MTS. Its core idea is to model the normal patterns inside MTS data through hierarchical Variational AutoEncoder with two stochastic latent variables, each of which learns low-dimensional inter-metric or temporal embeddings. Furthermore, we propose an MCMC-based method to obtain reasonable embeddings and reconstructions at anomalous parts for MTS anomaly interpretation. Our evaluation experiments are conducted on four real-world datasets from different industrial domains (three existing and one newly published dataset collected through our pilot deployment of InterFusion). InterFusion achieves an average anomaly detection F1-Score higher than 0.94 and anomaly interpretation performance of 0.87, significantly outperforming recent state-of-the-art MTS anomaly detection methods.},
+author={Li, Zhihan and Zhao, Youjian and Han, Jiaqi and Su, Ya and Jiao, Rui and Wen, Xidao and Pei, Dan},
+title={Multivariate Time Series Anomaly Detection and Interpretation Using Hierarchical Inter-Metric and Temporal Embedding},
+year={2021},
+publisher={Association for Computing Machinery},
+url={https://doi.org/10.1145/3447548.3467075},
+doi={10.1145/3447548.3467075},
+booktitle={Proceedings of the 27th ACM SIGKDD Conference on Knowledge Discovery \& Data Mining},
+pages={3220–3230},
+numpages={11},
+series={KDD '21},
+abstract={Anomaly detection is a crucial task for monitoring various status (i.e., metrics) of entities (e.g., manufacturing systems and Internet services), which are often characterized by multivariate time series (MTS). In practice, it's important to precisely detect the anomalies, as well as to interpret the detected anomalies through localizing a group of most anomalous metrics, to further assist the failure troubleshooting. In this paper, we propose InterFusion, an unsupervised method that simultaneously models the inter-metric and temporal dependency for MTS. Its core idea is to model the normal patterns inside MTS data through hierarchical Variational AutoEncoder with two stochastic latent variables, each of which learns low-dimensional inter-metric or temporal embeddings. Furthermore, we propose an MCMC-based method to obtain reasonable embeddings and reconstructions at anomalous parts for MTS anomaly interpretation. Our evaluation experiments are conducted on four real-world datasets from different industrial domains (three existing and one newly published dataset collected through our pilot deployment of InterFusion). InterFusion achieves an average anomaly detection F1-Score higher than 0.94 and anomaly interpretation performance of 0.87, significantly outperforming recent state-of-the-art MTS anomaly detection methods.},
 pdf={https://dl.acm.org/doi/pdf/10.1145/3447548.3467075},
 code={https://github.com/zhhlee/InterFusion},
 selected={true}
@@ -43,3 +42,94 @@ code={https://github.com/hanjq17/GMN},
 selected={true}
 }
 
+@inproceedings{jiao2023energy,
+  abbr={AAAI},
+  title={Energy-motivated equivariant pretraining for 3d molecular graphs},
+  author={Jiao, Rui and Han, Jiaqi and Huang, Wenbing and Rong, Yu and Liu, Yang},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={37},
+  number={7},
+  pages={8096--8104},
+  year={2023},
+  pdf={https://arxiv.org/pdf/2207.08824.pdf},
+  code={https://github.com/jiaor17/3D-EMGP},
+  selected={true}
+}
+
+
+@article{chen2022smoothing,
+  abbr={Arxiv},
+  title={Smoothing matters: Momentum transformer for domain adaptive semantic segmentation},
+  author={Chen, Runfa and Rong, Yu and Guo, Shangmin and Han, Jiaqi and Sun, Fuchun and Xu, Tingyang and Huang, Wenbing},
+  journal={arXiv preprint arXiv:2203.07988},
+  year={2022},
+  pdf={https://arxiv.org/pdf/2203.07988.pdf},
+  code={https://github.com/alpc91/TransDA}
+}
+
+@article{han2022equivariant,
+  abbr={NeurIPS},
+  title={Equivariant graph hierarchy-based neural networks},
+  author={Han, Jiaqi and Huang, Wenbing and Xu, Tingyang and Rong, Yu},
+  journal={Advances in Neural Information Processing Systems},
+  volume={35},
+  pages={9176--9187},
+  year={2022},
+  pdf={https://proceedings.neurips.cc/paper_files/paper/2022/file/3bdeb28a531f7af94b56bcdf8ee88f17-Paper-Conference.pdf},
+  code={https://github.com/hanjq17/EGHN},
+  selected={true},
+  preview={EGHN.png}
+}
+
+@article{han2022learning,
+  abbr={NeurIPS},
+  title={Learning physical dynamics with subequivariant graph neural networks},
+  author={Han, Jiaqi and Huang, Wenbing and Ma, Hengbo and Li, Jiachen and Tenenbaum, Josh and Gan, Chuang},
+  journal={Advances in Neural Information Processing Systems},
+  volume={35},
+  pages={26256--26268},
+  year={2022},
+  pdf={https://proceedings.neurips.cc/paper_files/paper/2022/file/a845fdc3f87751710218718adb634fe7-Paper-Conference.pdf},
+  code={https://github.com/hanjq17/SGNN},
+  website={https://hanjq17.github.io/SGNN},
+  selected={true},
+  preview={SGNN.png}
+}
+
+@article{jiao2023crystal,
+  title={Crystal structure prediction by joint equivariant diffusion},
+  author={Jiao, Rui and Huang, Wenbing and Lin, Peijia and Han, Jiaqi and Chen, Pin and Lu, Yutong and Liu, Yang},
+  journal={Advances in Neural Information Processing Systems},
+  year={2023},
+  pdf={https://arxiv.org/pdf/2309.04475.pdf},
+  code={https://github.com/jiaor17/DiffCSP}
+}
+
+@article{han2023structure,
+  author={Han, Jiaqi and Huang, Wenbing and Rong, Yu and Xu, Tingyang and Sun, Fuchun and Huang, Junzhou},
+  journal={IEEE Transactions on Neural Networks and Learning Systems}, 
+  title={Structure-Aware DropEdge Toward Deep Graph Convolutional Networks}, 
+  year={2023},
+  pages={1-13},
+  doi={10.1109/TNNLS.2023.3288484},
+  pdf={https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10195874},
+  code={https://github.com/hanjq17/DropEdgePlus}
+  }
+
+
+@InProceedings{chen2023subequivariant,
+  abbr={ICML},
+  title = 	 {Subequivariant Graph Reinforcement Learning in 3{D} Environments},
+  author =       {Chen, Runfa and Han, Jiaqi and Sun, Fuchun and Huang, Wenbing},
+  booktitle = 	 {Proceedings of the 40th International Conference on Machine Learning},
+  pages = 	 {4545--4565},
+  year = 	 {2023},
+  volume = 	 {202},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {23--29 Jul},
+  publisher =    {PMLR},
+  pdf = 	 {https://proceedings.mlr.press/v202/chen23i/chen23i.pdf},
+  website = 	 {https://alpc91.github.io/SGRL/},
+  code = {https://github.com/alpc91/SGRL},
+  abstract = 	 {Learning a shared policy that guides the locomotion of different agents is of core interest in Reinforcement Learning (RL), which leads to the study of morphology-agnostic RL. However, existing benchmarks are highly restrictive in the choice of starting point and target point, constraining the movement of the agents within 2D space. In this work, we propose a novel setup for morphology-agnostic RL, dubbed Subequivariant Graph RL in 3D environments (3D-SGRL). Specifically, we first introduce a new set of more practical yet challenging benchmarks in 3D space that allows the agent to have full Degree-of-Freedoms to explore in arbitrary directions starting from arbitrary configurations. Moreover, to optimize the policy over the enlarged state-action space, we propose to inject geometric symmetry, i.e., subequivariance, into the modeling of the policy and Q-function such that the policy can generalize to all directions, improving exploration efficiency. This goal is achieved by a novel SubEquivariant Transformer (SET) that permits expressive message exchange. Finally, we evaluate the proposed method on the proposed benchmarks, where our method consistently and significantly outperforms existing approaches on single-task, multi-task, and zero-shot generalization scenarios. Extensive ablations are also conducted to verify our design.}
+}
