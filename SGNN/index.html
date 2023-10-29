@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="Learning Physical Dynamics with Subequivariant Graph Neural Networks">
+    <meta name="author"
+          content="Jiaqi Han, Wenbing Huang, Hengbo Ma, Jiachen Li, Joshua B. Tenenbaum and Chuang Gan">
+
+    <title>Learning Physical Dynamics with Subequivariant Graph Neural Networks</title>
+    <!-- Bootstrap core CSS -->
+    <!--link href="bootstrap.min.css" rel="stylesheet"-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="offcanvas.css" rel="stylesheet">
+    <!--    <link rel="icon" href="img/favicon.gif" type="image/gif">-->
+</head>
+
+<body>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container"></div>
+    <h2>Learning Physical Dynamics with Subequivariant Graph Neural Networks</h2>
+    <h3>NeurIPS 2022</h3>
+    <hr>
+    <p class="authors">
+        <a href="https://hanjq17.github.io/">Jiaqi Han</a>,
+        <a href="https://gsai.ruc.edu.cn/addons/teacher/index/info.html?user_id=31&ruccode=20220125&ln=en">Wenbing Huang</a>,
+        Hengbo Ma,
+        <a href="https://jiachenli94.github.io/">Jiachen Li</a>,
+        <a href="http://web.mit.edu/cocosci/josh.html">Joshua B. Tenenbaum</a> and
+        <a href="http://people.csail.mit.edu/ganchuang/">Chuang Gan</a>
+    </p>
+    <div class="btn-group" role="group" aria-label="Top menu">
+        <a class="btn btn-primary" href="https://arxiv.org/pdf/2210.06876.pdf">Paper</a>
+        <a class="btn btn-primary" href="https://github.com/hanjq17/SGNN">Code</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <!-- <div class="vcontainer">
+            <iframe class='video' src="" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div> -->
+        <!-- <hr> -->
+        <p>
+            Graph Neural Networks (GNNs) have become a prevailing tool for learning physical dynamics.
+            However, they still encounter several challenges: 1) Physical laws abide by symmetry,
+            which is a vital inductive bias accounting for model generalization and should be incorporated into the model design.
+            Existing simulators either consider insufficient symmetry, or enforce excessive equivariance in practice when symmetry is partially broken by gravity.
+            2) Objects in the physical world possess diverse shapes, sizes, and properties, which should be appropriately processed by the model.
+            To tackle these difficulties, we propose a novel backbone, Subequivariant Graph Neural Network, which
+            1) relaxes equivariance to subequivariance by considering external fields like gravity, where the universal approximation ability holds theoretically;
+            2) introduces a new subequivariant object-aware message passing for learning physical interactions between multiple objects of various shapes in the particle-based representation;
+            3) operates in a hierarchical fashion, allowing for modeling long-range and complex interactions.
+            Our model achieves on average over 3% enhancement in contact prediction accuracy across 8 scenarios on Physion
+            and 2X lower rollout MSE on RigidFall compared with state-of-the-art GNN simulators, while exhibiting strong generalization and data efficiency.
+        </p>
+
+    </div>
+
+    <br>
+
+    <div class="section">
+        <h2>SGNN Architecture</h2>
+        <hr>
+        <p>
+            <strong>SOMP.</strong>  In the first place, our Subequivariant Graph Neural Network (SGNN) is equipped with the Subequivariant Object-aware Message Passing (SOMP) mechanism depicted in the figure below. 
+            SOMP is able to characterize the rich geometric information exchanging between two interacting objects while preserving the desirable symmetry, e.g., the rotational equivariance restricted along the gravity axis.
+            Compared with the existing Graph Network simulators [Sanchez-Gonzalez et al., 2020; Li et al., 2018; Satorras et al., 2021], SOMP better simulates the dynamics that well abides by the physical prior, thus achieving 
+            strong generalization in different evaluation scenarios. We also theoretically reveal that SOMP can universally approximate any subequivariant function, whose equivariance is broken by external force fields.
+        </p>
+        <div class="row justify-content-center text-center">
+            <div class="col-sm-10">
+                <img src="img/SOMP.png" style="width:100%">
+            </div>
+        </div>
+     <br>
+        <p>
+            <strong>Overall architecture.</strong> Many physical scenes are complicated, possibly involving contact, collision, and friction amongst multiple objects. 
+            In light of this, we further incorporate our message passing into a multi-stage hierarchical modeling framework. 
+            One of our interesting findings here is the edge separation. This is indeed motivated by the consideration that the interactions between or within objects are usually different, 
+            and it would be beneficial to disentangle these two kinds of interactions in message passing.
+            The overall flowchart is provided in the figure below. We alternate between three stages that implement the above-mentioned SOMP distinctly. 
+        </p>
+        <div class="row justify-content-center text-center">
+            <div class="col-sm-10">
+                <img src="img/SGNN_arch.png" style="width:100%">
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="section">
+        <h2>The Performance on Dynamics Simulation</h2>
+        <hr>
+        <p>
+            We benchmark SGNN on Physion [Bear et al., 2021], a large-scale challeging dataset, as well as RigidFall [Li et al., 2020]. We demonstrate the superiority of SGNN
+            on dynamics prediction tasks in terms of predicting high-fidelity trajectories in a highly data-efficient manner. We display some qualitative comparisons between SGNN and the baselines
+            in the following animation. Please refer to our paper for the comprehensive quantitative results as well as ablation studies.
+        </p>
+
+
+        <div class="row justify-content-center text-center">
+            <div class="col-sm-6">
+                <img src="img/demo1.gif" style="width:100%">
+            </div>
+            <div class="col-sm-6">
+                <!-- <h5>Cheetah-vel</h5> -->
+                <img src="img/demo2.gif" style="width:100%">
+                <!-- <h5>Prompt-DT</h5> -->
+            </div>
+            <hr>
+            <div class="col-sm-6">
+                <img src="img/demo3.gif" style="width:100%">
+            </div>
+            <div class="col-sm-6">
+                <img src="img/demo4.gif" style="width:100%">
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+
+
+    <div class="section">
+        <h2>Generalization Towards Unseen Testing Data</h2>
+        <hr>
+        <p>We further evaluate the generalization capability of SGNN towards unseen test-time modifications of the data, in order to verify that our design does equip SGNN with 
+            the desirable physical inductive bias. The experiments are conducted in three aspects.
+        </p>
+        <p> <strong>1. Random rotation along the gravity axis.</strong>  Since our SGNN satisfies subequivariance, it naturally well generalizes to test data that are rotated along
+        the gravity axis, even when trained on data with directional bias. Among the baselines, GNS [Sanchez-Gonzalez et al., 2020] and DPI [Li et al., 2018] do not explicitly satisfy equivariance, 
+        while EGNN [Satorras et al., 2021], as a E(n)-equivariant model,
+        exerts a too strong equivariance constraint that fails to take into account the broken symmetry along the gravity axis. Our SGNN, with the help of SOMP, relaxes the constraint and 
+        is able to bridge the gap between training and testing data.</p> 
+        <div class="row justify-content-left">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-8">
+                <img src="img/rotation1.gif" style="width:100%">
+            </div>
+        </div>
+        <br>
+        <p><strong>2. Random rotation along a non-gravity axis.</strong> Apart from rotating along the gravity axis, it is also interesting to see whether breaking equivariance, as characterized by
+            our subequivariance, can indeed help the model correctly learn the effect of gravity. One strong evidence for this criteria is to see how the predicted trajectory will be if we apply
+            a test-time rotation along a non-gravity axis. In the animation below, we surprisingly find that SGNN is able to predict the dynamics driven by the gravity even when trained only on
+            the horizontally placed scenarios. This observation verifies the efficacy of our proposed equivariance relaxation approach.</p>
+
+        <div class="row justify-content-left">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-5">
+                <img src="img/rand_rotation.gif" style="width:100%">
+            </div>
+            <div class="col-sm-6">
+                <img src="img//cross-scenario.png" style="width:100%">
+            </div>
+        </div>
+        <br>
+        <p><strong>3. Generalization across different scenarios.</strong> We further assess the cross-scenario generalization of SGNN and compare it with GNS on Physion dataset. The heatmap
+        above depicts the contact accuracy when the model is trained on scenarios indexed by rows and tested on those indexed by columns. SGNN performs promisingly, outperforming the baseline by a large margin.</p>
+
+    </div>
+
+    <br>
+
+    <div class="section">
+        <h2>Bibtex</h2>
+        <hr>
+        <div class="bibtexsection">
+            @inproceedings{
+                han2022learning,
+                title={Learning Physical Dynamics with Subequivariant Graph Neural Networks},
+                author={Jiaqi Han and Wenbing Huang and Hengbo Ma and Jiachen Li 
+                and Joshua B. Tenenbaum and Chuang Gan},
+                booktitle={Thirty-Sixth Conference on Neural Information Processing Systems},
+                year={2022}
+            }
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p>Welcome to send feedbacks and questions to <a href="https://hanjq17.github.io">Jiaqi Han</a>.
+            The template is based on <a href="https://yilundu.github.io/gem/">Du et al</a>.
+        </p>
+    </footer>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
