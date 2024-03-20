@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: PhD student in <a href="https://www.cs.stanford.edu/">Stanford CS</a>.
+subtitle: PhD student at <a href="https://www.cs.stanford.edu/">Stanford CS</a>.
 
 profile:
   align: right
