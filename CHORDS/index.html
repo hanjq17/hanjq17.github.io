@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="CHORDS: Diffusion Sampling Accelerator with \\Multi-core Hierarchical ODE Solvers">
+  <meta name="keywords" content="Diffusion Sampling Acceleration, Parallel Sampling">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CHORDS: Diffusion Sampling Accelerator with Multi-core Hierarchical ODE Solvers</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    .container-construction {
+      font-family: Arial, sans-serif;
+      color: #333;
+      text-align: center;
+      background: #fff;
+      border: 2px solid #ff9800;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 600px;
+      font-size: 1.5em;
+    }
+
+    .construction-icon {
+      font-size: 5em;
+      margin: 20px 0;
+    }
+
+    @keyframes progress {
+      0% {
+        width: 0%;
+      }
+
+      50% {
+        width: 50%;
+      }
+
+      100% {
+        width: 0%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">CHORDS: Diffusion Sampling Accelerator with Multi-core Hierarchical ODE Solvers</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://hanjq17.github.io">Jiaqi Han</a><sup>*</sup>,</span>
+              <span class="author-block">
+                <a href="https://haotianye.com/">Haotian Ye</a><sup>*</sup>,</span>
+              <span class="author-block">
+                <a href="https://leo-li.com/">Puheng Li</a><sup></sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://minkaixu.com/">Minkai Xu</a><sup></sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.james-zou.com/">James Zou</a><sup></sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://cs.stanford.edu/~ermon/">Stefano Ermon</a><sup></sup>
+              </span>
+            </div>
+            
+            <div class="has-text-weight-bold" style="font-size: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+              ICCV 2025
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup> </sup>Stanford University</span>
+              <br>
+              <span class="author-block"><sup>*</sup>Equal contribution</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2507.15260" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/hanjq17/CHORDS" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" autoplay muted loop playsinline controls height="100%">
+          <source src="./static/videos/chords-video.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          CHORDS is a general, training-free, and model-agnostic acceleration strategy via multi-core parallelism for diffusion sampling. CHORDS initializes a sequence of cores hierarchically from slow to fast, where slower yet accurate solvers progressively rectify faster solvers through a theoretically justified inter-core rectification mechanism. Extensive experiments demonstrate that CHORDS significantly accelerates diffusion sampling across various modern image and video diffusion models.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="demo1" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan1.mp4" type="video/mp4">
+        </video>
+        <video id="demo2" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan2.mp4" type="video/mp4">
+        </video>
+        <video id="demo3" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan3.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan4.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan5.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan6.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          <b>CHORDS</b> applied to <b>HunyuanVideo</b> accelerates <b>text-to-video</b> generation by 2-3x using 4-8 cores without quality degradation. Samples are produced by the <b>fastest</b> core for each case.
+        </h2>
+      </div>
+    </div>
+
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="demo1" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/cogvideo1.mp4" type="video/mp4">
+        </video>
+        <video id="demo2" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/cogvideo2.mp4" type="video/mp4">
+        </video>
+        <video id="demo2" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/cogvideo3.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+            <b>CHORDS</b> applied to <b>CogVideoX1.5-5B</b> accelerates <b>text-to-video</b> generation by 2-3x using 4-8 cores without quality degradation. Samples are produced by the <b>fastest</b> core for each case.
+        </h2>
+      </div>
+    </div>
+
+    <div class="container is-max-desktop">
+            <div class="column has-text-centered">
+              <img src="./static/images/flux1.png" class="mx-auto" width="33%"/>
+              <img src="./static/images/flux2.png" class="mx-auto" width="33%" />
+              <img src="./static/images/flux3.png" class="mx-auto" width="33%" />
+              <p class="subtitle has-text-centered">
+            <b>CHORDS</b> applied to <b>Flux</b> accelerates <b>text-to-image</b> generation by 2-3x using 4-8 cores without quality degradation. Samples are produced by the <b>fastest</b> core for each case.
+            </p>
+            </div>
+
+            <div class="column has-text-centered">
+              <img src="./static/images/sd1.png" class="mx-auto" width="33%"/>
+              <img src="./static/images/sd2.png" class="mx-auto" width="33%" />
+              <img src="./static/images/sd3.png" class="mx-auto" width="33%" />
+              <p class="subtitle has-text-centered">
+                  <b>CHORDS</b> applied to <b>Stable Diffusion 3.5 Large</b> accelerates <b>text-to-image</b> generation by 2-3x using 4-8 cores without quality degradation. Samples are produced by the <b>fastest</b> core for each case.
+              </p>
+            </div>
+
+          </div>
+
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="demo1" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/abl-ours.mp4" type="video/mp4">
+        </video>
+        <video id="demo2" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/abl-srds.mp4" type="video/mp4">
+        </video>
+        <video id="demo2" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/abl-picard.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          Qualitative comparisons on CogVideo1.5X with the same initial latent. <br> Left: <b>CHORDS (Ours)</b>; Middle: SRDS; Right: ParaDIGMS.
+        </h2>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+Diffusion-based generative models have become dominant generators of high-fidelity images and videos but remain limited by their computationally expensive inference procedures. Existing acceleration techniques either require extensive model retraining or compromise significantly on sample quality.
+</p>
+<p>This paper explores a general, training-free, and model-agnostic acceleration strategy via multi-core parallelism. Our framework views multi-core diffusion sampling as an ODE solver pipeline, where slower yet accurate solvers progressively rectify faster solvers through a theoretically justified inter-core communication mechanism. This motivates our multi-core training-free diffusion sampling accelerator, CHORDS, which is compatible with various diffusion samplers, model architectures, and modalities.
+</p>
+  <p>Through extensive experiments, CHORDS significantly accelerates sampling across diverse large-scale image and video diffusion models, yielding up to 2.1x speedup with four cores, improving by 50% over baselines, and 2.9x speedup with eight cores, all without quality degradation. This advancement enables CHORDS to establish a solid foundation for real-time, high-fidelity diffusion generation.
+            </p>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Animation. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Method</h2>
+          <img src="./static/images/illustration1.png" alt="Method Overview" width="100%"/>
+
+          <!-- Interpolating. -->
+          <div class="content has-text-justified">
+            <p>
+              Our approach leverages at core an operation named "Multi-core Rectification" (as depicted in the left figure) that refines the latents of the faster cores (the cores with larger core index) with the slower but more accurate ones (those with smaller core index), with necessary theoretical justification. With such technique, we are able to remarkably streamline diffusion generation with multi-core parallelism without measurable quality degradation. We also establish a general pipeline recipe that optimally avoids bubbles and permits efficient information propagation across cores. See Algorithm 1 for more details.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Animation. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Main Results</h2>
+          <img src="./static/images/table1.png" alt="Method Overview" width="100%"/>
+
+          <img src="./static/images/table2.png" alt="Method Overview" width="100%"/>
+
+          <!-- Interpolating. -->
+          <div class="content has-text-justified">
+            <p>
+              CHORDS offers significant diffusion sampling speedup across a diverse range of video diffusion (Table 1) and image diffusion (Table 2) models consistently across 4 to 8 cores, while not sacrificing sample quality, as evidenced by VBench Quality Score and CLIP Score. Please refer to our paper for more detailed results and ablation studies.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+      <h2 class="title">BibTeX</h2>
+    </div>
+      <pre><code>@inproceedings{han2025chords,
+  author    = {Han, Jiaqi and Ye, Haotian and Li, Puheng and Xu, Minkai and Zou, James and Ermon, Stefano},
+  title     = {CHORDS: Diffusion Sampling Accelerator with Multi-core Hierarchical ODE Solvers},
+  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+  year      = {2025}
+}</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+
+    <div class="columns is-centered">
+      <div class="content">
+        <p>
+          The website template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
