@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration">
+  <meta name="keywords" content="Diffusion Sampling Acceleration, Diffusion Cache">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    .container-construction {
+      font-family: Arial, sans-serif;
+      color: #333;
+      text-align: center;
+      background: #fff;
+      border: 2px solid #ff9800;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 600px;
+      font-size: 1.5em;
+    }
+
+    .construction-icon {
+      font-size: 5em;
+      margin: 20px 0;
+    }
+
+    @keyframes progress {
+      0% {
+        width: 0%;
+      }
+
+      50% {
+        width: 50%;
+      }
+
+      100% {
+        width: 0%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://hanjq17.github.io">Jiaqi Han</a><sup>*1</sup>,</span>
+              <span class="author-block">
+                <a href="https://juntongshi48.github.io">Juntong Shi</a><sup>*1</sup>,</span>
+              <span class="author-block">
+                <a href="https://leo-li.com/">Puheng Li</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://haotianye.com/">Haotian Ye</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=nDLaim4AAAAJ&hl=en">Qiushan Guo</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://cs.stanford.edu/~ermon/">Stefano Ermon</a><sup>1</sup>
+              </span>
+            </div>
+            
+            <div class="has-text-weight-bold" style="font-size: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+              CVPR 2026
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Stanford University</span>&nbsp;&nbsp;
+              <span class="author-block"><sup>2</sup>ByteDance</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2603.01623" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/hanjq17/Spectrum" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" autoplay muted loop playsinline controls height="100%">
+          <source src="./static/videos/chords-video.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          CHORDS is a general, training-free, and model-agnostic acceleration strategy via multi-core parallelism for diffusion sampling. CHORDS initializes a sequence of cores hierarchically from slow to fast, where slower yet accurate solvers progressively rectify faster solvers through a theoretically justified inter-core rectification mechanism. Extensive experiments demonstrate that CHORDS significantly accelerates diffusion sampling across various modern image and video diffusion models.
+        </h2>
+      </div>
+    </div>
+  </section> -->
+
+  <section class="hero teaser">
+
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="demo1" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo1.mp4" type="video/mp4">
+        </video>
+        <video id="demo2" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo2.mp4" type="video/mp4">
+        </video>
+        <video id="demo3" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo3.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo4.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo5.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo6.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+           <em>Spectrum</em> applied to <b>HunyuanVideo</b> with samples generated using only 14 network evaluations, leading to a significant speedup of 3.5x without quality degradation.
+        </h2>
+      </div>
+    </div>
+
+    <div class="container is-max-desktop">
+            <div class="column has-text-centered">
+              <img src="./static/images/image1.png" class="mx-auto" width="33%"/>
+              <img src="./static/images/image2.png" class="mx-auto" width="33%" />
+              <img src="./static/images/image3.png" class="mx-auto" width="33%" />
+              <img src="./static/images/image4.png" class="mx-auto" width="33%"/>
+              <img src="./static/images/image5.png" class="mx-auto" width="33%" />
+              <img src="./static/images/image6.png" class="mx-auto" width="33%" />
+              <p class="subtitle has-text-centered">
+            <em>Spectrum</em> applied to <b>FLUX.1</b> with samples generated using only 14 network evaluations, leading to a significant speedup of 3.5x without quality degradation.
+            </p>
+            </div>
+          </div>
+
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+Diffusion models have become the dominant tool for high-fidelity image and video generation, yet are critically bottlenecked by their inference speed due to the numerous iterative passes of Diffusion Transformers. To reduce the exhaustive compute, recent works resort to the feature caching and reusing scheme that skips network evaluations at selected diffusion steps by using cached features in previous steps. However, their preliminary design solely relies on <b>local approximation</b>, causing errors to grow rapidly with large skips and leading to degraded sample quality at high speedups.</p>
+<p>In this work, we propose <b>spectral diffusion feature forecaster</b> (<em>Spectrum</em>), a training-free approach that enables global, long-range feature reuse with tightly controlled error. In particular, we view the latent features of the denoiser as functions over time and approximate them with <b>Chebyshev polynomials</b>. Specifically, we fit the coefficient for each basis via ridge regression, which is then leveraged to forecast features at multiple future diffusion steps. We theoretically reveal that our approach admits more favorable <b>long-horizon</b> behavior and yields an error bound that does not compound with the step size.</p>
+<p>Extensive experiments on various state-of-the-art image and video diffusion models consistently verify the superiority of our approach. Notably, we achieve up to 4.79x speedup on FLUX.1 and 4.67x speedup on Wan2.1-14B, while maintaining much higher sample quality.
+            </p>
+          </div>
+        </div>
+      </div>
+  </section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <h2 class="title is-3 has-text-centered">Method</h2>
+
+    <div class="columns is-vcentered">
+  <!-- 50% text -->
+  <div class="column is-half">
+    <div class="content has-text-justified is-size-6">
+      <p>
+        <b>Diffusion feature forecaster.</b> Feature caching-based approaches have stood out and shown great promise in remarkably reducing the sampling time while maintaining desirable sample quality, all without additional training. Concretely, these methods cache latent features produced by certain blocks at selected timesteps and use them to synthesize features at future timesteps via light-weight predictors, thereby avoiding expensive denoiser evaluations. In particular, the naïve copy strategy directly reuses the most recent cached feature, while the recent work performs discrete Taylor expansion using a few nearest cached points. We summarize the algorithmic flow in the figure.
+      </p>
+    </div>
+  </div>
+
+  <!-- 50% figure -->
+  <div class="column is-half has-text-centered">
+    <figure class="image">
+      <img src="./static/images/algo.png" alt="Method Overview" style="width: 100%; height: auto;">
+    </figure>
+  </div>
+</div>
+
+<b>From local to global.</b> Despite the promise, through our error analysis (see Theorem 3.1) and empirical verification, we find existing predictors (e.g., TaylorSeer) are all <b>local</b> predictors that incur approximation errors that compound rapidly as the forecasting horizon grows, leading to severe quality degradation at high speedup ratios.
+We introduce <b>spectral feature forecasters</b>, which address the pitfalls above by switching to the spectral domain that models the sampling trajectory <b>globally</b>.
+<br>
+<br>
+
+<b>Chebyshev polynomials as the spectral bases.</b> We propose to leverage Chebyshev polynomials as a set of bases to model the evolution of diffusion features. An important property of the Chebyshev polynomials is that they form a set of orthonormal basis for the function space, such that any function can be represented as a weighted sum of the Chebyshev polynomials.
+<br>
+
+<b>Overall approach.</b> <em>Spectrum</em> features two core operations, online coefficient fitting and feature forecasting, as illustrated below.
+<br>
+<br>
+    <figure class="image">
+      <img src="./static/images/illustration.png" alt="Method Overview" style="width: 100%; height: auto;">
+    </figure>
+<br>
+Specifically, we fit the coefficient matrix corresponding to the Chebyshev polynomials given the current diffusion features via ridge regression. The fitted coefficients are then used to forecast features at multiple future diffusion steps to avoid the expensive denoiser forward pass. The approach is training-free and easy-to-implement with strong empirical performance.
+Moreover, we theoretically reveal that our approach admits more favorable long-horizon behavior and yields an error bound that <b>does not</b> compound with the step size, which is in stark contrast to local predictors.
+  </div>
+</section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Animation. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <h2 class="title is-3">Main Results: Text-to-Image</h2>
+          <img src="./static/images/image_results.png" alt="Method Overview" width="100%"/>
+          <img src="./static/images/img_qualitative_study.png" alt="Method Overview" width="80%"/>
+          <!-- Interpolating. -->
+          <div class="content has-text-justified">
+            <p>
+            <em>Spectrum</em> consistently achieves higher speedup while maintaining much better sample quality compared with all baselines, demonstrating the efficacy of our spectral feature forecaster.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Animation. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <h2 class="title is-3">Main Results: Text-to-Video</h2>
+          <img src="./static/images/video_results.png" alt="Method Overview" width="100%"/>
+          <!-- Interpolating. -->
+          <div class="content has-text-justified">
+            <p>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="demo1" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan1_50steps.mp4" type="video/mp4">
+        </video>
+        <video id="demo2" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan1_spectrum.mp4" type="video/mp4">
+        </video>
+        <video id="demo3" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan1_taylorseer.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan2_50steps.mp4" type="video/mp4">
+        </video>
+        <video id="demo5" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan2_spectrum.mp4" type="video/mp4">
+        </video>
+        <video id="demo6" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/hunyuan2_taylorseer.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          Qualitative comparisons on HunyuanVideo with the same initial latent. <br> Left: <b>Original 50 step oracle</b>;&nbsp;&nbsp;&nbsp;&nbsp; Middle: <b>Spectrum (14 steps)</b>;&nbsp;&nbsp;&nbsp;&nbsp; Right: <b>TaylorSeer (16 steps)</b>.
+        </h2>
+      </div>
+    </div>
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="demo1" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/wan1_50steps.mp4" type="video/mp4">
+        </video>
+        <video id="demo2" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/wan1_spectrum.mp4" type="video/mp4">
+        </video>
+        <video id="demo3" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/wan1_taylorseer.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/wan2_50steps.mp4" type="video/mp4">
+        </video>
+        <video id="demo5" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/wan2_spectrum.mp4" type="video/mp4">
+        </video>
+        <video id="demo6" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/wan2_taylorseer.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          Qualitative comparisons on Wan2.1-14B with the same initial latent. <br> Left: <b>Original 50 step oracle</b>;&nbsp;&nbsp;&nbsp;&nbsp; Middle: <b>Spectrum (14 steps)</b>;&nbsp;&nbsp;&nbsp;&nbsp; Right: <b>TaylorSeer (16 steps)</b>.
+        </h2>
+        <p>
+          Our <em>Spectrum</em> achieves the best performance with even fewer steps, demonstrating superior sample quality and better temporal consistency. In contrast, TaylorSeer exhibits unnatural color shifts and temporal jittering, which are likely caused by the compounding errors from local approximation.
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+      <h2 class="title">BibTeX</h2>
+    </div>
+      <pre><code>@article{han2026adaptive,
+  title={Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration},
+  author={Han, Jiaqi and Shi, Juntong and Li, Puheng and Ye, Haotian and Guo, Qiushan and Ermon, Stefano},
+  journal={arXiv preprint arXiv:2603.01623},
+  year={2026}
+}</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+
+    <div class="columns is-centered">
+      <div class="content">
+        <p>
+          The website template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
