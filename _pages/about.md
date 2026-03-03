@@ -17,7 +17,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 
 ---
 
-I am currently a second year PhD student at Stanford Computer Science, advised by Prof. [Stefano Ermon](https://cs.stanford.edu/~ermon/). Previously, I obtained B.S. in Computer Science at Tsinghua University, where I was very fortunate to work with Prof. Wenbing Huang.
+I am currently a third year PhD student at Stanford Computer Science, advised by Prof. [Stefano Ermon](https://cs.stanford.edu/~ermon/). Previously, I obtained B.S. in Computer Science at Tsinghua University, where I was very fortunate to work with Prof. Wenbing Huang.
 
 My core research interests lie in developing **generative models** for data in diverse modalities: discrete data (texts), temporal data (videos), relational data (graphs), and geometric data (molecules and proteins), to name a few. I am particularly interested in **preference optimization** and **inference acceleration** for diffusion/AR models.
 
