@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="One-Step Generative Modeling via Wasserstein Gradient Flows">
+  <meta name="keywords" content="One-Step Generative Modeling, Wasserstein Gradient Flows">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One-Step Generative Modeling via Wasserstein Gradient Flows</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+  }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .container-construction {
+      font-family: Arial, sans-serif;
+      color: #333;
+      text-align: center;
+      background: #fff;
+      border: 2px solid #ff9800;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 600px;
+      font-size: 1.5em;
+    }
+
+    .construction-icon {
+      font-size: 5em;
+      margin: 20px 0;
+    }
+
+    @keyframes progress {
+      0% {
+        width: 0%;
+      }
+
+      50% {
+        width: 50%;
+      }
+
+      100% {
+        width: 0%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">One-Step Generative Modeling via Wasserstein Gradient Flows</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://hanjq17.github.io">Jiaqi Han</a><sup>1*</sup>,</span>&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://leo-li.com/">Puheng Li</a><sup>1*</sup>,</span>&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=nDLaim4AAAAJ&hl=en">Qiushan Guo</a><sup>2</sup>,
+              </span>
+              <br>
+              <span class="author-block">
+                <a href="https://renyuanxu.github.io/">Renyuan Xu</a><sup>1&dagger;</sup>,
+              </span>&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://cs.stanford.edu/~ermon/">Stefano Ermon</a><sup>1&dagger;</sup>,
+              </span>&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="https://candes.su.domains/">Emmanuel J. Candès</a><sup>1&dagger;</sup>
+              </span>
+            </div>
+            
+            <!-- <div class="has-text-weight-bold" style="font-size: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+              CVPR 2026
+            </div> -->
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Stanford University</span>&nbsp;&nbsp;
+              <span class="author-block"><sup>2</sup>ByteDance Seed</span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>*</sup>Equal contribution</span>&nbsp;&nbsp;
+              <span class="author-block"><sup>&dagger;</sup>Equal advising</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>Arxiv</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/hanjq17/W-Flow" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code (Coming soon)</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" autoplay muted loop playsinline controls height="100%">
+          <source src="./static/videos/chords-video.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          CHORDS is a general, training-free, and model-agnostic acceleration strategy via multi-core parallelism for diffusion sampling. CHORDS initializes a sequence of cores hierarchically from slow to fast, where slower yet accurate solvers progressively rectify faster solvers through a theoretically justified inter-core rectification mechanism. Extensive experiments demonstrate that CHORDS significantly accelerates diffusion sampling across various modern image and video diffusion models.
+        </h2>
+      </div>
+    </div>
+  </section> -->
+
+  <section class="hero teaser">
+
+    <!-- <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="demo1" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo1.mp4" type="video/mp4">
+        </video>
+        <video id="demo2" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo2.mp4" type="video/mp4">
+        </video>
+        <video id="demo3" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo3.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo4.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo5.mp4" type="video/mp4">
+        </video>
+        <video id="demo4" autoplay muted loop playsinline controls width="33%">
+          <source src="./static/videos/demo6.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+           <em>Spectrum</em> applied to <b>HunyuanVideo</b> with samples generated using only 14 network evaluations, leading to a significant speedup of 3.5x without quality degradation.
+        </h2>
+      </div>
+    </div> -->
+<!-- 
+    <div class="container is-max-desktop">
+            <div class="column has-text-centered">
+              <img src="./static/images/image1.png" class="mx-auto" width="33%"/>
+              <img src="./static/images/image2.png" class="mx-auto" width="33%" />
+              <img src="./static/images/image3.png" class="mx-auto" width="33%" />
+              <img src="./static/images/image4.png" class="mx-auto" width="33%"/>
+              <img src="./static/images/image5.png" class="mx-auto" width="33%" />
+              <img src="./static/images/image6.png" class="mx-auto" width="33%" />
+              <p class="subtitle has-text-centered">
+            <em>Spectrum</em> applied to <b>FLUX.1</b> with samples generated using only 14 network evaluations, leading to a significant speedup of 3.5x without quality degradation.
+            </p>
+            </div>
+          </div> -->
+        <div class="container is-max-desktop">
+  <div class="column has-text-centered">
+    <img 
+      src="./static/images/wflow-samples1_cropped.png" 
+      class="mx-auto" 
+      width="100%"
+    />
+
+    <p class="subtitle has-text-centered">
+      <em>(Left)</em> <b>1-NFE samples</b> from W-Flow, L/2 trained from scratch on ImageNet 256&times;256.
+      <br> <em>(Right)</em> Sample quality (measured by FID) vs. effective sampling compute (billion parameters &times; number of function evaluations during sampling) evaluated on ImageNet 256&times;256.
+    </p>
+  </div>
+</div>
+
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>Diffusion models and flow-based methods have shown impressive generative capability,
+            especially for images, but their sampling is expensive because it requires many
+iterative updates. We introduce <em>W-Flow</em>, a framework for training a generator that
+transforms samples from a simple reference distribution into samples from a target
+data distribution in a single step.</p>
+<p>This is achieved in two steps: we first define
+an evolution from the reference distribution to the target distribution through a
+Wasserstein gradient flow that minimizes an energy functional; second, we train
+a static neural generator to compress this evolution into one-step generation. We
+instantiate the energy with the Sinkhorn divergence, which yields an efficient
+optimal-transport-based update rule that captures global distributional discrepancy
+and improves coverage of the target distribution. We further prove that the finite-
+sample training dynamics converge to the continuous-time distributional dynamics
+under suitable assumptions.
+<p>Empirically, W-Flow sets a new state of the art for
+one-step ImageNet 256&times;256 generation, achieving 1.29 FID, with improved mode
+coverage and domain transfer. Compared to multi-step diffusion models with
+similar FID scores, our method yields approximately 100&times; faster sampling. These
+results show that Wasserstein gradient flows provide a principled and effective
+foundation for fast and high-fidelity generative modeling.</p>
+
+            <!-- <p>
+Diffusion models have become the dominant tool for high-fidelity image and video generation, yet are critically bottlenecked by their inference speed due to the numerous iterative passes of Diffusion Transformers. To reduce the exhaustive compute, recent works resort to the feature caching and reusing scheme that skips network evaluations at selected diffusion steps by using cached features in previous steps. However, their preliminary design solely relies on <b>local approximation</b>, causing errors to grow rapidly with large skips and leading to degraded sample quality at high speedups.</p>
+<p>In this work, we propose <b>spectral diffusion feature forecaster</b> (<em>Spectrum</em>), a training-free approach that enables global, long-range feature reuse with tightly controlled error. In particular, we view the latent features of the denoiser as functions over time and approximate them with <b>Chebyshev polynomials</b>. Specifically, we fit the coefficient for each basis via ridge regression, which is then leveraged to forecast features at multiple future diffusion steps. We theoretically reveal that our approach admits more favorable <b>long-horizon</b> behavior and yields an error bound that does not compound with the step size.</p>
+<p>Extensive experiments on various state-of-the-art image and video diffusion models consistently verify the superiority of our approach. Notably, we achieve up to 4.79x speedup on FLUX.1 and 4.67x speedup on Wan2.1-14B, while maintaining much higher sample quality.
+            </p> -->
+          </div>
+        </div>
+      </div>
+  </section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <h2 class="title is-3 has-text-centered">Method</h2>
+
+    <div class="columns is-vcentered">
+  <!-- 50% text -->
+  <div class="column is-half">
+    <div class="content has-text-justified is-size-6">
+      <p>
+        <b>Wasserstein gradient flow (WGF).</b> Given an energy functional $\mathcal{F}:\mathcal{P}(\mathbb{R}^n)\mapsto\mathbb{R}^n$ defined on probability
+distributions and the model generated distribution $q_t$, the WGF is given by
+$$\partial_t q_t
+    =
+    \nabla\cdot\!\left(
+    q_t \nabla \frac{\delta \mathcal{F}}{\delta q}(q_t)
+    \right). $$
+The distribution $q_t$ evolves along the <em>steepest descent</em> direction of $\mathcal{F}$ in Wasserstein space.
+By choosing $\mathcal{F}$ to be a suitable divergence between $q_t$ and the target distribution $p$, 
+the WGF can be used to define a continuous-time evolution that transforms samples from a simple reference distribution (e.g., Gaussian) to samples from the target distribution.
+      </p>
+    </div>
+  </div>
+
+  <!-- 50% figure -->
+  <div class="column is-half has-text-centered">
+    <figure class="image">
+      <img src="./static/images/dynamics.png" alt="Method Overview" style="width: 95%; height: auto;">
+    </figure>
+  </div>
+</div>
+
+
+<div class="columns is-vcentered">
+  <!-- 50% text -->
+  <div class="column is-half">
+    <div class="content has-text-justified is-size-6">
+            <p>
+        <b>Our approach.</b> Concretely, our method is realized by two steps.
+        First, we prescribe how the entire model distribution should evolve toward the target distribution by a WGF.
+        Then, we train a static generator to compress the discretized evolution into one-step generation. See the flowchart on the right.
+        In particular, the discretization is give by:
+        $$
+        g^{(k)}(x)= x + \eta V^{(k)}(x),
+    \qquad
+    V^{(k)}(x) = - \nabla \frac{\delta \mathcal{F}}{\delta q}(q^{(k)})(x),
+    $$
+    where $V^{(k)}$ is the velocity field at step $k$ induced by the corresponding energy functional $\mathcal{F}$, and $\eta$ is the step size.
+      </p>
+    </div>
+  </div>
+
+  <!-- 50% figure -->
+  <div class="column is-half has-text-centered">
+    <figure class="image">
+      <img src="./static/images/flowchart.png" alt="Method Overview" style="width: 95%; height: auto;">
+    </figure>
+  </div>
+</div>
+
+
+
+<div class="columns is-vcentered">
+  <!-- 50% text -->
+  <div class="column is-half">
+    <div class="content has-text-justified is-size-6">
+            <p>
+        <b>Choice of the energy funcitonal $\mathcal{F}$.</b>
+        The choice of $\mathcal F$ is critical, as it determines both the geometry of the WGF and the tractability of the induced velocity field.
+        Common choices include e.g. squared MMD and KL divergence. Yet, they face significant limitations in practice and induce inferior performance.
+        We resort to the <em>Sinkhorn divergence</em>, an OT-based discrepancy that avoids explicit score estimation and admits a natural and direct implementation on data samples.
+      </p>
+    </div>
+  </div>
+
+  <!-- 50% figure -->
+  <div class="column is-half has-text-centered">
+    <figure class="image">
+      <img src="./static/images/velocity_field.png" alt="Method Overview" style="width: 95%; height: auto;">
+    </figure>
+  </div>
+</div>
+
+
+<div class="columns is-centered has-text-centered">
+  <div class="column">
+
+    <!-- Interpolating. -->
+    <div class="content has-text-justified">
+      <p>
+      <b>Training.</b> Empirically, we compute the barycentric projections $T^\varepsilon_{q_\theta,p}$ and $T^\varepsilon_{q_\theta,q_\theta}$
+      using Sinkhorn iterations (see Algorithm 2). Then, we train the one-step generator $f_\theta$ using a regression-based objective that enforces its outputs to match their particle-based updates via the velocity field (see Algorithm 1).
+      Notaby, we adopt a <em>two-batch estimator</em> for the self-transport term $T^\varepsilon_{q_\theta,q_\theta}$.
+      </p>
+    </div>
+    <img src="./static/images/algo.png" alt="Method Overview" width="80%"/>
+  </div>
+</div>
+
+<div class="columns is-centered has-text-centered">
+  <div class="column">
+
+    <!-- Interpolating. -->
+    <div class="content has-text-justified">
+      <p>
+      <b>Classifier-free guidance.</b> Our framework naturally supports baking classifier-free guidance (CFG) into the generator at training time.
+      The idea is to use a small batch of unconditional samples as additional reference to enforce an extra repulsion. Specifically, we define
+      $$ \tilde{V}^{\varepsilon,w}_{q_\theta,p}(x_i)= \left(T^\varepsilon_{q_\theta(\cdot|c),p(\cdot|c)}(x_i) \!-\! T^\varepsilon_{q_\theta(\cdot|c),q_\theta(\cdot|c)}(x_i)\right) \!+\! w \underline{\left(T^\varepsilon_{q_\theta(\cdot|c),p(\cdot|c)}(x_i) \!-\! T^\varepsilon_{q_\theta(\cdot|c),p(\cdot|\varnothing)}(x_i)\right)},$$
+      where $T^\varepsilon_{q_\theta(\cdot|c),p(\cdot|\varnothing)}$ denotes the Sinkhorn barycentric projection (Alg. 2) between $q_\theta(\cdot|c)$ and the unconditional data distribution $p(\cdot|\varnothing)$.
+      This construction injects guidance via the underlined term that computes the difference between the conditional and unconditional velocity fields.
+      Notably, this differs from the CFG in Drifting Models, which directly modifies the repulsive distribution by incorporating additional particles from $p_\theta(\cdot|\varnothing)$.
+      The empirical benefits of our CFG is illustrated below.
+      </p>
+    </div>
+    <img src="./static/images/sweepcfg_cropped.png" alt="Method Overview" width="80%"/>
+  </div>
+</div>
+
+<!-- <br>
+<div class="columns is-centered has-text-centered">
+  <p><b>Training dynamics.</b><br></p>
+  <br>
+      <img src="./static/images/algo.png" alt="Method Overview" width="80%"/>
+</div> -->
+
+<br>
+  </div>
+</section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Animation. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <h2 class="title is-3">Main Results: Class-conditional Generation on ImageNet</h2>
+          <img src="./static/images/imagenet_result.png" alt="Method Overview" width="80%"/>
+          <!-- Interpolating. -->
+          <div class="content has-text-justified">
+            <p>
+
+              We compare W-Flow with state-of-the-art one-step generators and multi-step diffusion and flow models. Notably, W-Flow establishes a new state of the art for one-step class-conditional generation on ImageNet 256$\times$256, achieving an FID of 1.29 at XL scale and 1.35 at L scale, outperforming MeanFlow-based methods and Drifting Models by a clear margin.
+              Remarkably, W-Flow B/2, with only 133M generator parameters, achieves an FID of 1.52, surpassing Drifting Model L/2 despite its substantially larger 463M-parameter generator.
+              Furthermore, despite 1-NFE sampling, W-Flow outperforms most diffusion models requiring up to 250 steps, such as LightningDiT-XL/2. These strong empirical results support our central claim that principled WGF dynamics can translate into exceptional generation performance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+    <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Animation. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <h2 class="title is-3">Domain Transfer and Mode Coverage</h2>
+          <img src="./static/images/face_comparison_cropped.png" alt="Method Overview" width="95%"/>
+          <!-- Interpolating. -->
+          <div class="content has-text-justified">
+            <p>
+              <b>(a) Oval-to-circle domain transfer.</b> Source and target are constructed by sampling angles uniformly from $[0, 2\pi)$ with parametric curves corrupted by Gaussian noise.
+              <b>(b) & (c) One-step facial age translation on FFHQ, mapping older faces to younger ones.</b> <b>(b)</b> Histogram of the latent $\ell_2$ distance  between 2,000 source images and their generated targets.
+    <b>(c)</b> Visual comparison. 
+            </p>
+          </div>
+
+
+          <img src="./static/images/mode_collapse_cropped.png" alt="Method Overview" width="92%"/>
+          <!-- Interpolating. -->
+          <div class="content has-text-justified">
+            <p>
+              <b>Evaluation of mode coverage under imbalanced target distributions.</b>
+              <b>(a)</b> Evaluation of mode coverage on a 2D Gaussian mixtures dataset featuring six dominant modes and two distant minority modes.
+              <b>(b)</b> PCA scatter plot of generated latent codes for an artificially imbalanced FFHQ target distribution (95% senior faces, 5% child faces).
+            </p>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Animation. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <h2 class="title is-3">Qualitative Samples</h2>
+          <img src="./static/images/wdrifting-website-samples-B.png" alt="Method Overview" width="100%"/>
+          <!-- Interpolating. -->
+          <div class="content has-text-centered">
+            <p>
+              Uncurated image samples produced by W-Flow B/2 with CFG scale $w=0.15$.
+            </p>
+          </div>
+
+          <img src="./static/images/wdrifting-website-samples-L.png" alt="Method Overview" width="100%"/>
+          <!-- Interpolating. -->
+          <div class="content has-text-centered">
+            <p>
+              Uncurated image samples produced by W-Flow L/2 with CFG scale $w=0.15$.
+            </p>
+          </div>
+
+          <img src="./static/images/wdrifting-website-samples-XL.png" alt="Method Overview" width="100%"/>
+          <!-- Interpolating. -->
+          <div class="content has-text-centered">
+            <p>
+              Uncurated image samples produced by W-Flow XL/2 with CFG scale $w=0.15$.
+            </p>
+          </div>
+
+
+          <img src="./static/images/wdrifting-website-samples-XL-largecfg.png" alt="Method Overview" width="100%"/>
+          <!-- Interpolating. -->
+          <div class="content has-text-centered">
+            <p>
+              Uncurated image samples produced by W-Flow XL/2 with CFG scale $w=2.0$.
+            </p>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+    <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Animation. -->
+      
+
+    </div>
+  </section>
+
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+      <h2 class="title">BibTeX</h2>
+    </div>
+      <pre><code>@article{xxx,
+  title={xxx},
+  author={xxx},
+  journal={xxx},
+  year={xxx}
+}</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+
+    <div class="columns is-centered">
+      <div class="content">
+        <p>
+          The website template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
