@@ -111,7 +111,7 @@ window.MathJax = {
               <div class="publication-links">
                 <!-- PDF Link. -->
                 <span class="link-block">
-                  <a href="https://arxiv.org" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://arxiv.org/abs/2605.11755" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="ai ai-arxiv"></i>
                     </span>
@@ -216,20 +216,20 @@ window.MathJax = {
           <div class="content has-text-justified">
             <p>Diffusion models and flow-based methods have shown impressive generative capability,
             especially for images, but their sampling is expensive because it requires many
-iterative updates. We introduce <em>W-Flow</em>, a framework for training a generator that
+iterative updates. We introduce <b>W-Flow</b>, a framework for training a generator that
 transforms samples from a simple reference distribution into samples from a target
-data distribution in a single step.</p>
-<p>This is achieved in two steps: we first define
+data distribution in <b>a single step</b>.</p>
+<p>This is achieved in <b>two steps</b>: we first define
 an evolution from the reference distribution to the target distribution through a
-Wasserstein gradient flow that minimizes an energy functional; second, we train
-a static neural generator to compress this evolution into one-step generation. We
+<b>Wasserstein gradient flow</b> that minimizes an energy functional; second, we train
+a static neural generator to <b>compress this evolution into one-step generation</b>. We
 instantiate the energy with the Sinkhorn divergence, which yields an efficient
 optimal-transport-based update rule that captures global distributional discrepancy
 and improves coverage of the target distribution. We further prove that the finite-
 sample training dynamics converge to the continuous-time distributional dynamics
 under suitable assumptions.
-<p>Empirically, W-Flow sets a new state of the art for
-one-step ImageNet 256&times;256 generation, achieving 1.29 FID, with improved mode
+<p>Empirically, W-Flow sets <b>a new state of the art</b> for
+one-step ImageNet 256&times;256 generation, achieving <b>1.29 FID</b>, with improved mode
 coverage and domain transfer. Compared to multi-step diffusion models with
 similar FID scores, our method yields approximately 100&times; faster sampling. These
 results show that Wasserstein gradient flows provide a principled and effective
@@ -360,6 +360,11 @@ the WGF can be used to define a continuous-time evolution that transforms sample
       </p>
     </div>
     <img src="./static/images/sweepcfg_cropped.png" alt="Method Overview" width="80%"/>
+          <p>
+      <em>(Left)</em> The FID and Inception Score curve when sweeping over different CFG scales.
+      <br>
+      <em>(Right)</em> Image samples produced by W-Flow, L/2 with CFG increasing from 0.0 to 2.0.
+      </p>
   </div>
 </div>
 
@@ -385,9 +390,10 @@ the WGF can be used to define a continuous-time evolution that transforms sample
           <div class="content has-text-justified">
             <p>
 
-              We compare W-Flow with state-of-the-art one-step generators and multi-step diffusion and flow models. Notably, W-Flow establishes a new state of the art for one-step class-conditional generation on ImageNet 256$\times$256, achieving an FID of 1.29 at XL scale and 1.35 at L scale, outperforming MeanFlow-based methods and Drifting Models by a clear margin.
+              We compare W-Flow with state-of-the-art one-step generators and multi-step diffusion and flow models. Notably, W-Flow establishes a <b>new state of the art</b> for one-step class-conditional generation on ImageNet 256$\times$256, achieving an <b>FID of 1.29</b> at XL scale and 1.35 at L scale, outperforming MeanFlow-based methods and Drifting Models by a clear margin.
               Remarkably, W-Flow B/2, with only 133M generator parameters, achieves an FID of 1.52, surpassing Drifting Model L/2 despite its substantially larger 463M-parameter generator.
-              Furthermore, despite 1-NFE sampling, W-Flow outperforms most diffusion models requiring up to 250 steps, such as LightningDiT-XL/2. These strong empirical results support our central claim that principled WGF dynamics can translate into exceptional generation performance.
+              Furthermore, despite 1-NFE sampling, W-Flow <b>outperforms most diffusion models</b> requiring up to 250 steps, such as LightningDiT-XL/2. These strong empirical results support our central claim that
+              <b>principled WGF dynamics can translate into exceptional generation performance.</b>
             </p>
           </div>
         </div>
@@ -404,6 +410,22 @@ the WGF can be used to define a continuous-time evolution that transforms sample
       <div class="columns is-centered has-text-centered">
         <div class="column">
           <h2 class="title is-3">Domain Transfer and Mode Coverage</h2>
+            <div class="content has-text-justified">
+            <p>
+              <b>Domain transfer.</b> Unlike standard generative models that typically map Gaussian noise to data,
+                W-Flow can instead define a WGF between arbitrary distributions. This makes it naturally suited
+                for domain transfer tasks where the source and target share the same semantic space. By setting
+                the reference distribution to be a source data distribution, it learns a one-step domain-transfer map, e.g., from senior
+                to young-adult faces.
+                In a 2D oval-to-circle toy example below, Drifting Model shows erratic intermediate states and
+                often moves particles far from their initial positions. In contrast, the OT-induced velocity in W-Flow
+                produces coordinated, nearly straight, and much shorter trajectories toward the target.
+                We further evaluate one-step age translation on FFHQ, mapping senior faces (ages 55-100) to
+                young-adult faces (ages 18-30). The figure below shows
+                that W-Flow achieves shorter latent $\ell_2$ transport distances and better preserves source identity.
+            </p>
+          </div>
+
           <img src="./static/images/face_comparison_cropped.png" alt="Method Overview" width="95%"/>
           <!-- Interpolating. -->
           <div class="content has-text-justified">
@@ -411,6 +433,22 @@ the WGF can be used to define a continuous-time evolution that transforms sample
               <b>(a) Oval-to-circle domain transfer.</b> Source and target are constructed by sampling angles uniformly from $[0, 2\pi)$ with parametric curves corrupted by Gaussian noise.
               <b>(b) & (c) One-step facial age translation on FFHQ, mapping older faces to younger ones.</b> <b>(b)</b> Histogram of the latent $\ell_2$ distance  between 2,000 source images and their generated targets.
     <b>(c)</b> Visual comparison. 
+            </p>
+          </div>
+
+
+                      <div class="content has-text-justified">
+            <p>
+              <b>Mode coverage.</b> We construct
+              a 2D Gaussian mixtures dataset with six large tightly concentrated modes and two small distant
+              minority modes. As shown in the figure below, Drifting Model greedily collapses on the dominant clusters,
+              while the Sinkhorn barycentric projections in W-Flow instead enforce global marginal constraints
+              and successfully preserve the coverage of all modes.
+              We further extend this observation to image generation on FFHQ under an imbalanced training
+              distribution, where target batches contain 95% senior faces (ages 55-100) and 5% child faces (ages
+              0-12). The PCA visualization in the figure below shows that Drifting Model almost entirely drops the
+              minority child mode, whereas W-Flow successfully captures it while maintaining high fidelity on the
+              dominant senior mode. 
             </p>
           </div>
 
@@ -496,11 +534,11 @@ the WGF can be used to define a continuous-time evolution that transforms sample
       <div class="columns is-centered has-text-centered">
       <h2 class="title">BibTeX</h2>
     </div>
-      <pre><code>@article{xxx,
-  title={xxx},
-  author={xxx},
-  journal={xxx},
-  year={xxx}
+      <pre><code>@article{han2026onestep,
+  title={One-Step Generative Modeling via Wasserstein Gradient Flows},
+  author={Han, Jiaqi and Li, Puheng and Guo, Qiushan and Xu, Renyuan and Ermon, Stefano and Candes, Emmanuel},
+  journal={arXiv preprint arXiv:2605.11755},
+  year={2026}
 }</code></pre>
     </div>
   </section>
